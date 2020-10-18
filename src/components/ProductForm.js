@@ -3,15 +3,12 @@ import moment from "moment";
 import {Button} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 
-const ContactForm = (props) => {
+const ProductForm = (props) => {
 
     const initialFieldValues = {
         id: '',
         itemName: '',
         price: '',
-        amount: '',
-        dateTime: moment().format("DD MMM, YYYY"),
-        total: ''
     }
     const [values, setValues] = useState(initialFieldValues)
 
@@ -22,15 +19,13 @@ const ContactForm = (props) => {
             })
         } else {
             setValues({
-                ...props.contactObj[props.currentId]
+                ...props.productObj[props.currentId]
             })
         }
-    }, [props.currentId, props.contactObj])
+    }, [props.currentId, props.productObj])
 
     const submitHandler = (e) => {
         e.preventDefault()
-        let total = parseInt(values.price) * parseInt(values.amount)
-        values.total = total
         props.addOrEdit(values)
 
     }
@@ -63,12 +58,6 @@ const ContactForm = (props) => {
                                placeholder="Price" value={values.price}/>
                     </div>
                 </div>
-                <div className="form-group">
-                    <div className="input-group mb-3">
-                        <TextField label="Number Of Plates" variant='outlined' onChange={inputChangeHandler} name='amount' type="number" className="mt-2"
-                               placeholder="Number Of Plates" value={values.amount}/>
-                    </div>
-                </div>
                 <Button variant='contained' color='primary' type="submit" className="mb-sm-5">{
                     props.currentId ? 'Update' : 'Save'
                 }</Button>
@@ -77,4 +66,4 @@ const ContactForm = (props) => {
     );
 };
 
-export default ContactForm;
+export default ProductForm;

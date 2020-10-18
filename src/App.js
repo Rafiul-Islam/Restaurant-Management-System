@@ -1,11 +1,19 @@
 import React from 'react';
-import './App.css';
-import Contacts from "./components/Contacts";
+import Products from "./components/Products";
+import {Route, Redirect, Switch} from "react-router-dom";
+import SellDetails from "./components/SellDetails";
+import Routers from "./Router/Routers";
 
 function App() {
   return (
-    <div className="App">
-      <Contacts/>
+    <div>
+        <Routers/>
+        <div className="content">
+            <Switch>
+                <Route path="/" exact component={Products} />
+                <Route path="/sell" exact component={SellDetails} />
+            </Switch>
+        </div>
     </div>
   );
 }

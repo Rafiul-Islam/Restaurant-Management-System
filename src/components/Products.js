@@ -1,31 +1,25 @@
 import React, {useEffect, useState} from 'react';
-import ContactForm from "./ContactForm";
-import fireDb from '../db-service/Firebase'
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from '@material-ui/icons/Menu';
-import Typography from "@material-ui/core/Typography";
-import {Box} from "@material-ui/core";
+import ProductForm from "./ProductForm";
+import fireDb from '../Firebase/config'
 
-const Contacts = () => {
+const Products = () => {
 
-    const [contactObj, setContactObj] = useState({})
+    const [productObj, setProductObj] = useState({})
     const [currentId, setCurrentId] = useState('')
 
     useEffect(() => {
-        fireDb.child('contactNew').on('value', snapshot => {
+        fireDb.child('Products').on('value', snapshot => {
             if (snapshot.val() != null)
-                setContactObj({...snapshot.val()})
+                setProductObj({...snapshot.val()})
             else {
-                setContactObj({})
+                setProductObj({})
             }
         })
     }, [])
 
     const addOrEdit = (obj) => {
         if (!currentId) {
-            fireDb.child('contactNew').push(
+            fireDb.child('Products').push(
                 obj,
                 error => {
                     if (error)
@@ -35,7 +29,7 @@ const Contacts = () => {
                 }
             )
         } else {
-            fireDb.child(`contactNew/${currentId}`).set(
+            fireDb.child(`Products/${currentId}`).set(
                 obj,
                 error => {
                     if (error)
@@ -48,8 +42,8 @@ const Contacts = () => {
     }
 
     const deleteHandler = (id) => {
-        if (window.confirm('do you want to delete this?')) {
-            fireDb.child(`contactNew/${id}`).remove(
+        if (window.confirm('Do you want to delete this?')) {
+            fireDb.child(`Products/${id}`).remove(
                 error => {
                     if (error)
                         console.log(error)
@@ -62,19 +56,9 @@ const Contacts = () => {
 
     return (
         <div>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton edge="start" color="inherit" aria-label="menu">
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography variant="h6">
-                        Hotel Management Application
-                    </Typography>
-                </Toolbar>
-            </AppBar>
             <div className="row mt-5">
                 <div className="col-md-2 offset-md-1 text-left">
-                    <ContactForm {...({addOrEdit, currentId, contactObj})}/>
+                    <ProductForm {...({addOrEdit, currentId, productObj})}/>
                 </div>
                 <div className="col-md-8">
                     <table className="table">
@@ -83,22 +67,16 @@ const Contacts = () => {
                             <th scope="col">ID</th>
                             <th scope="col">Item Name</th>
                             <th scope="col">Price (BDT)</th>
-                            <th scope="col">Number of Plates</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Total (BDT)</th>
                             <th scope="col">Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         {
-                            Object.keys(contactObj).map((id) =>
+                            Object.keys(productObj).map((id) =>
                                 <tr key={id}>
-                                    <td>{contactObj[id].id}</td>
-                                    <td>{contactObj[id].itemName}</td>
-                                    <td>{contactObj[id].price}</td>
-                                    <td>{contactObj[id].amount}</td>
-                                    <td>{contactObj[id].dateTime}</td>
-                                    <td>{contactObj[id].total}</td>
+                                    <td>{productObj[id].id}</td>
+                                    <td>{productObj[id].itemName}</td>
+                                    <td>{productObj[id].price}</td>
                                     <td>
                                         <i className="fas fa-edit text-primary" style={{cursor: "pointer"}}
                                            onClick={() => {
@@ -120,4 +98,4 @@ const Contacts = () => {
     );
 };
 
-export default Contacts;
+export default Products;
