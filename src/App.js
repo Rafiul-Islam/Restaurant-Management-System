@@ -10,6 +10,7 @@ function App() {
         <Routers/>
         <div className="content">
             <Switch>
+                <Redirect from='/sell?amount=' to="/sell" exact/>
                 <Route path="/" exact component={Products} />
                 <Route path="/sell" exact component={SellDetails} />
             </Switch>

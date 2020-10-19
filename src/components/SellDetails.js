@@ -8,7 +8,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 
-const SellDetails = () => {
+const SellDetails = (props) => {
 
     const [contactObj, setContactObj] = useState({})
     const [sellObj, setSellObj] = useState({})
@@ -57,11 +57,10 @@ const SellDetails = () => {
     }
 
     const submitHandler = (e) => {
-        e.preventDefault()
+		e.preventDefault()
         values.total = parseInt(values.price) * parseInt(values.amount)
         addToDataBase(values)
         setValues(emptyOBJ)
-        window.location.reload(false);
     }
 
     const inputChangeHandler = (e) => {
