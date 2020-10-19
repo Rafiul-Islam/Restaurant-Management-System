@@ -82,16 +82,16 @@ const SellDetails = (props) => {
             <div className="col-md-2 offset-md-1 text-left">
                 <form onSubmit={submitHandler} className='mb-sm-4' autoComplete="off">
                     <FormControl fullWidth variant="outlined">
-                        <InputLabel id="demo-simple-select-outlined-label">ID</InputLabel>
+                        <InputLabel id="demo-simple-select-outlined-label">Item</InputLabel>
                         <Select
                             labelId="demo-simple-select-outlined-label"
                             id="demo-simple-select-outlined"
-                            label="ID"
+                            label="Item"
                             onChange={idChangeHandler}
                         >
                             {
                                 Object.keys(contactObj).map((id) =>
-                                    <MenuItem key={id} value={contactObj[id]}>{contactObj[id].id}</MenuItem>
+                                    <MenuItem key={id} value={contactObj[id]}>{contactObj[id].itemName}</MenuItem>
                                 )
 
                             }
